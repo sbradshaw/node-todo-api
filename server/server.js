@@ -9,12 +9,12 @@ var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todo');
 var {User} = require('./models/user');
 
-var app = express();
-
 var port = process.env.PORT;
 
+var app = express();
 app.use(bodyParser.json());
 
+// POST /todos
 app.post('/todos', (req, res) => {
   var todo = new Todo({
     text: req.body.text
@@ -24,24 +24,28 @@ app.post('/todos', (req, res) => {
     .then((doc) => {
       res.status(200);
       res.send(doc);
-    }, (err) => {
+    })
+    .catch((err) => {
       res.status(400);
       res.send(err);
     });
 });
 
+// GET /todos
 app.get('/todos', (req, res) => {
   Todo.find()
     .then((todos) => {
       res.send({
         todos
       });
-    }, (err) => {
+    })
+    .catch((err) => {
       res.status(400);
       res.send(err);
     });
 });
 
+// GET /todos/:id
 app.get('/todos/:id', (req, res) => {
   var id = req.params.id;
   
@@ -66,6 +70,7 @@ app.get('/todos/:id', (req, res) => {
     });
 });
 
+// DELETE /todos
 app.delete('/todos/:id', (req, res) => {
   var id = req.params.id;
 
@@ -90,6 +95,7 @@ app.delete('/todos/:id', (req, res) => {
     });
 });
 
+// PATCH /todos/:id
 app.patch('/todos/:id', (req, res) => {
   var id = req.params.id;
   var body = _.pick(req.body, ['text', 'completed']);
@@ -113,9 +119,30 @@ app.patch('/todos/:id', (req, res) => {
       }
 
       res.send({todo});
-    }).catch((err) => {
+    })
+    .catch((err) => {
       res.status(400).send();
     })
+});
+
+// POST /users
+app.post('/users', (req, res) => {
+  var body = _.pick(req.body, ['email', 'password']);
+  var user = new User(body);
+
+  user.save()
+    .then(() => {
+      return user.generateAuthToken();
+    })
+    .then((token) => {
+      res.status(200);
+      res.header('x-auth', token);
+      res.send(user);
+    })
+    .catch((err) => {
+      res.status(400);
+      res.send(err);
+    });
 });
 
 app.listen(port, () => {

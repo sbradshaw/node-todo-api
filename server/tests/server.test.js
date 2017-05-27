@@ -49,7 +49,8 @@ describe('POST /todos', () => {
             expect(todos.length).toBe(1);
             expect(todos[0].text).toBe(text);
             done();
-          }).catch((err) => {
+          })
+          .catch((err) => {
             done(err);
           });
       });
@@ -144,7 +145,7 @@ describe('DELETE /todos/:id', () => {
           .catch((err) => {
             done(err);
           });
-        });
+      });
   });
 
   it('should return 404 if todo not found', (done) => {
