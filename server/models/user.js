@@ -83,6 +83,7 @@ UserSchema.statics.findByCredentials = function (email, password) {
 
   return User.findOne({email})
     .then((user) => {
+      
       if (!user) {
         return Promise.reject();
       }

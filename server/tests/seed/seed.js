@@ -41,6 +41,9 @@ const populateTodos = (done) => {
     })
     .then(() => {
       done();
+    })
+    .catch((err) => {
+      done(err);
     });
 };
 
@@ -54,6 +57,9 @@ const populateUsers = (done) => {
     })
     .then(() => {
       done();
+    })
+    .catch((err) => {
+      done(err);
     });
 };
 
