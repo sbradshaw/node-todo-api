@@ -55,11 +55,13 @@ MongoDB service is running before entering on of the the
 following commands (test-watch uses nodemon).
 
 ```
-npm run test || npm run test-watch
+npm test
+npm test-watch
 ```
 
 ## Built With
 
+* [es6](https://ecmascript.org) - Scripting language specification
 * [node](https://nodejs.org/en/) - JavaScript run-time environment
 * [bcryptjs](https://www.npmjs.com/package/bcrypt) - Password hashing
 * [express](https://expressjs.com/) - Node.js web application framework

@@ -12,7 +12,7 @@ beforeEach(populateTodos);
 
 describe('POST /todos', () => {
   it('should create a new todo', (done) => {
-    var text = 'Test todo text';
+    let text = 'Test todo text';
 
     request(app)
       .post('/todos')
@@ -102,7 +102,7 @@ describe('GET /todos/:id', () => {
   });
 
   it('should return 404 if todo not found', (done) => {
-    var id = new ObjectID();
+    let id = new ObjectID();
 
     request(app)
       .get(`/todos/${id.toHexString()}`)
@@ -122,7 +122,7 @@ describe('GET /todos/:id', () => {
 
 describe('DELETE /todos/:id', () => {
   it('should remove a todo', (done) => {
-    var hexId = todos[1]._id.toHexString();
+    let hexId = todos[1]._id.toHexString();
     
     request(app)
       .delete(`/todos/${hexId}`)
@@ -149,7 +149,7 @@ describe('DELETE /todos/:id', () => {
   });
 
   it('should not remove a todo created by another user', (done) => {
-    var hexId = todos[0]._id.toHexString();
+    let hexId = todos[0]._id.toHexString();
     
     request(app)
       .delete(`/todos/${hexId}`)
@@ -173,7 +173,7 @@ describe('DELETE /todos/:id', () => {
   });
 
   it('should return 404 if todo not found', (done) => {
-    var id = new ObjectID();
+    let id = new ObjectID();
 
     request(app)
       .delete(`/todos/${id.toHexString()}`)
@@ -193,9 +193,9 @@ describe('DELETE /todos/:id', () => {
 
 describe('PATH /todos/:id', () => {
   it('should update the todo', (done) => {
-    var text = 'Test todo text';
-    var completed = true;
-    var hexId = todos[0]._id.toHexString();
+    let text = 'Test todo text';
+    let completed = true;
+    let hexId = todos[0]._id.toHexString();
 
     request(app)
       .patch(`/todos/${hexId}`)
@@ -214,9 +214,9 @@ describe('PATH /todos/:id', () => {
   });
 
   it('should not update a todo created by another user', (done) => {
-    var text = 'Test todo text';
-    var completed = true;
-    var hexId = todos[0]._id.toHexString();
+    let text = 'Test todo text';
+    let completed = true;
+    let hexId = todos[0]._id.toHexString();
 
     request(app)
       .patch(`/todos/${hexId}`)
@@ -230,9 +230,9 @@ describe('PATH /todos/:id', () => {
   });
 
   it('should clear completedAt when todo is not completed', (done) => {
-    var text = 'Test todo text';
-    var completed = false;
-    var hexId = todos[1]._id.toHexString();
+    let text = 'Test todo text';
+    let completed = false;
+    let hexId = todos[1]._id.toHexString();
 
     request(app)
       .patch(`/todos/${hexId}`)
@@ -278,8 +278,8 @@ describe('GET /users/me', () => {
 
 describe('POST /users', () => {
   it('should create a user', (done) => {
-    var email = 'example@example.com';
-    var password = '123abcd';
+    let email = 'example@example.com';
+    let password = '123abcd';
 
     request(app)
       .post('/users')
@@ -312,8 +312,8 @@ describe('POST /users', () => {
   });
 
   it('should return validation errors if request is invalid', (done) => {
-    var email = 'example';
-    var password = '123';
+    let email = 'example';
+    let password = '123';
     
     request(app)
       .post('/users')
@@ -326,8 +326,8 @@ describe('POST /users', () => {
   });
 
   it('should not create a user if an email is in use', (done) => {
-    var email = 'andrew@example.com';
-    var password = '123abcde';
+    let email = 'andrew@example.com';
+    let password = '123abcde';
     
     request(app)
       .post('/users')

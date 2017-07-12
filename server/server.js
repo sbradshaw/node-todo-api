@@ -12,14 +12,14 @@ const {Todo} = require('./models/todo');
 const {User} = require('./models/user');
 const {authenticate} = require('./middleware/authenticate');
 
-var port = process.env.PORT;
+const port = process.env.PORT;
 
-var app = express();
+let app = express();
 app.use(bodyParser.json());
 
 // POST /todos
 app.post('/todos', authenticate, (req, res) => {
-  var todo = new Todo({
+  let todo = new Todo({
     text: req.body.text,
     _creator: req.user._id
   });
@@ -51,7 +51,7 @@ app.get('/todos', authenticate, (req, res) => {
 
 // GET /todos/:id
 app.get('/todos/:id', authenticate, (req, res) => {
-  var id = req.params.id;
+  let id = req.params.id;
 
   if (!ObjectID.isValid(id)) {
     return res.status(404).send();
@@ -75,7 +75,7 @@ app.get('/todos/:id', authenticate, (req, res) => {
 
 // DELETE /todos
 app.delete('/todos/:id', authenticate, (req, res) => {
-  var id = req.params.id;
+  let id = req.params.id;
 
   if (!ObjectID.isValid(id)) {
     res.status(404).send();
@@ -100,8 +100,8 @@ app.delete('/todos/:id', authenticate, (req, res) => {
 
 // PATCH /todos/:id
 app.patch('/todos/:id', authenticate, (req, res) => {
-  var id = req.params.id;
-  var body = _.pick(req.body, ['text', 'completed']);
+  let id = req.params.id;
+  let body = _.pick(req.body, ['text', 'completed']);
 
   if (!ObjectID.isValid(id)) {
     return res.status(404).send();
@@ -130,8 +130,8 @@ app.patch('/todos/:id', authenticate, (req, res) => {
 
 // POST /users
 app.post('/users', (req, res) => {
-  var body = _.pick(req.body, ['email', 'password']);
-  var user = new User(body);
+  let body = _.pick(req.body, ['email', 'password']);
+  let user = new User(body);
 
   user.save()
     .then(() => {
@@ -155,7 +155,7 @@ app.get('/users/me', authenticate, (req, res) => {
 
 // POST /users/login
 app.post('/users/login', (req, res) => {
-  var body = _.pick(req.body, ['email', 'password']);
+  let body = _.pick(req.body, ['email', 'password']);
 
   User.findByCredentials(body.email, body.password)
     .then((user) => {
@@ -186,5 +186,5 @@ app.listen(port, () => {
 });
 
 module.exports = {
-  app: app
-}
+  app
+};
